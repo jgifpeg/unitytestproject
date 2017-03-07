@@ -32,6 +32,14 @@ public abstract class MovingObject : MonoBehaviour {
 	}
 
 	protected IEnumerator SmoothMovement(Vector3 end){
+		/*
+		Vector3 velocity = Vector3.zero;
+		while (transform.position != end){
+			transform.position = Vector3.SmoothDamp(transform.position, end, ref velocity, moveTime);
+			yield return null;
+		}
+		*/
+		
 		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 
 		while (sqrRemainingDistance > float.Epsilon){
@@ -40,6 +48,7 @@ public abstract class MovingObject : MonoBehaviour {
 			sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 			yield return null;
 		}
+		
 	}
 
 	protected virtual void AttemptMove<T>(int xDir, int yDir)
