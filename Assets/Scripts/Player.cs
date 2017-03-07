@@ -54,12 +54,12 @@ public class Player : MovingObject {
 	protected override void AttemptMove<T>(int xDir, int yDir){
 		food--;
 		foodText.text = "Food: " + food;
-		base.AttemptMove<T>(xDir, yDir);
-
-		RaycastHit2D hit;
-		if (Move(xDir, yDir, out hit))
-			SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
-
+        RaycastHit2D hit;
+        if (CanMove(xDir, yDir, out hit))
+        {
+            SoundManager.instance.RandomizeSfx(moveSound1, moveSound2);
+        }
+        base.AttemptMove<T>(xDir, yDir);
 
 		CheckIfGameOver();
 		GameManager.instance.playersTurn = false;
@@ -76,7 +76,7 @@ public class Player : MovingObject {
 			other.gameObject.SetActive(false);
 		} else if (other.tag == "Soda"){
 			food += pointsPerSoda;
-			foodText.text = "+" + pointsPerSoda + "Food: " + food;
+			foodText.text = "+" + pointsPerSoda + " Food: " + food;
 			SoundManager.instance.RandomizeSfx(drinkSound1, drinkSound2);
 			other.gameObject.SetActive(false);
 		}
@@ -95,7 +95,7 @@ public class Player : MovingObject {
 	public void LoseFood(int loss){
 		animator.SetTrigger("playerHit");
 		food-=loss;
-		foodText.text = "-" + loss + "Food: " + food;
+		foodText.text = "-" + loss + " Food: " + food;
 		CheckIfGameOver();
 	}
 

@@ -19,7 +19,7 @@ public class BoardManager : MonoBehaviour {
 	public int columns = 8;
 	public int rows = 8;
 	public Count wallCount = new Count(5, 9);
-	public Count foodCount = new Count(1,5);
+	public Count foodCount = new Count(1, 5);
 	public GameObject exit;
 	public GameObject[] floorTiles;
 	public GameObject[] wallTiles;
