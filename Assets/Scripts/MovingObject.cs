@@ -41,14 +41,29 @@ public abstract class MovingObject : MonoBehaviour {
 	}
 
 	protected IEnumerator SmoothMovement(Vector3 end){
+		/*
+		Vector3 velocity = Vector3.zero;
+		while (transform.position != end){
+			transform.position = Vector3.SmoothDamp(transform.position, end, ref velocity, moveTime);
+			yield return null;
+		}
+		*/
+		
 		float sqrRemainingDistance = (transform.position - end).sqrMagnitude;
-
+		float previousTime = Time.realtimeSinceStartup;
+		float currentTime = Time.realtimeSinceStartup;
+		float deltaTime = currentTime - previousTime;
 		while (sqrRemainingDistance > float.Epsilon){
-			Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMoveTime*Time.deltaTime);
+			currentTime = Time.realtimeSinceStartup;
+			deltaTime = currentTime - previousTime;
+			previousTime = currentTime;
+			
+			Vector3 newPosition = Vector3.MoveTowards(rb2D.position, end, inverseMoveTime*deltaTime);
 			rb2D.MovePosition(newPosition);
 			sqrRemainingDistance = (transform.position - end).sqrMagnitude;
 			yield return null;
 		}
+		
 	}
 
 	protected virtual void AttemptMove<T>(int xDir, int yDir)
