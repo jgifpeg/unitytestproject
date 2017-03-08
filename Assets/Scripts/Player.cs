@@ -62,7 +62,8 @@ public class Player : MovingObject {
 			
 	}
 
-	protected override void AttemptMove<T>(int xDir, int yDir){
+	protected override void AttemptMove<T>(int xDir, int yDir)
+    {
 		food--;
 		foodText.text = "Food: " + food;
         RaycastHit2D hit;
@@ -94,10 +95,19 @@ public class Player : MovingObject {
 	}
 
 	protected override void OnCantMove<T>(T component){
+
 		Wall hitWall = component as Wall;
-		hitWall.DamageWall(wallDamage);
-		animator.SetTrigger("playerChop");
-	}
+        if(hitWall != null)
+        {
+            hitWall.DamageWall(wallDamage);
+        } else
+        {
+            Enemy hitEnemy = component as Enemy;
+            hitEnemy.DamageEnemy(5);
+        }
+
+        animator.SetTrigger("playerChop");
+    }
 
 	private void Restart(){
 		Application.LoadLevel(Application.loadedLevel);
