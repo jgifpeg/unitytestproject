@@ -70,8 +70,7 @@ public abstract class MovingObject : MonoBehaviour {
 		where T:Component
     {
 		RaycastHit2D hit;
-		bool canMove = CanMove(xDir, yDir, out hit);
-		if (canMove)
+		if (CanMove(xDir, yDir, out hit))
         {
             Move(xDir, yDir, out hit);
         }

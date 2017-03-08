@@ -48,7 +48,18 @@ public class Player : MovingObject {
 			vertical = 0;
 
 		if (horizontal!=0 || vertical!=0)
-			AttemptMove<Wall> (horizontal,vertical);
+        {
+            if(horizontal == -1)
+            {
+                animator.SetBool("playerIdleLeft", true);
+            }
+            else if(horizontal == 1)
+            {
+                animator.SetBool("playerIdleLeft", false);
+            }
+            AttemptMove<Wall>(horizontal, vertical);
+        }
+			
 	}
 
 	protected override void AttemptMove<T>(int xDir, int yDir){
